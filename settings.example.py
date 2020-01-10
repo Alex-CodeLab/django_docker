@@ -179,7 +179,7 @@ LOGGING = {
 
 # Webpack loader
 filename = f'webpack-bundle.{ENV}.json'
-stats_file = os.path.join(root_path('assets/'), filename)
+stats_file = os.path.join(root_path('assets/bundles'), filename)
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,

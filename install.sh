@@ -6,9 +6,9 @@ sudo chown -R $USER:$USER .
 
 mkdir -p assets/js
 mkdir assets/img
-mkdir assets/sass
+mkdir assets/scss
 touch assets/js/main.js
-touch assets/sass/main.sass
+touch assets/scss/main.scss
 
 # docker-compose build web
 docker-compose up -d --build
