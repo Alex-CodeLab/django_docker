@@ -15,6 +15,9 @@ finish:
     docker-compose run web ./manage.py startapp myapp
     docker-compose up
 
+Build assets:
+    cd asssets
+    npm run dev
 
 check database:
 
