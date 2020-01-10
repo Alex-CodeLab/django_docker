@@ -13,3 +13,8 @@ mv settings.example.py config/settings.py
 
 # docker-compose build web
 docker-compose up -d --build
+
+while [ ! -d "static" ]; do
+  sleep 0.5
+done   
+sudo chown -R $USER:$USER static
