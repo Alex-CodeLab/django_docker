@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import logging.config
 import environ
 
-env = environ.Env()
+env = environ.Env(DEBUG=(bool, False))
 root_path = environ.Path(__file__) - 2
+ENV = env('DJANGO_ENV')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,12 +26,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7k)q9j7o!0o$z87sa&(h)&kjrq)qod-7ovwz=rbi'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(env("DEBUG", default=0))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -42,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'chattr',
+    'webpack_loader',
+
 ]
 
 MIDDLEWARE = [
@@ -80,10 +83,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+  "default": {
+      "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+      "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+      "USER": os.environ.get("SQL_USER", "user"),
+      "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+      "HOST": os.environ.get("SQL_HOST", "localhost"),
+      "PORT": os.environ.get("SQL_PORT", "5432"),
+  }
 }
 
 
@@ -125,7 +132,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Logging
+# logging
 LOGS_ROOT = env('LOGS_ROOT', default=root_path('logs'))
 LOGGING = {
     'version': 1,
@@ -164,5 +171,19 @@ LOGGING = {
             'handlers': ['console', 'file'],
             'propagate': False,
         }
+    }
+}
+
+# Webpack loader
+filename = f'webpack-bundle.{ENV}.json'
+stats_file = os.path.join(root_path('assets/'), filename)
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+        'STATS_FILE': stats_file,
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
     }
 }

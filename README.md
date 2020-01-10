@@ -1,27 +1,12 @@
 
 
 install:
-     
+
      ./install.sh
 
 
-configure:
-replace in config/settings.py :
-
-      SECRET_KEY = os.environ.get("SECRET_KEY")
-      DEBUG = int(os.environ.get("DEBUG", default=0))
-      ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
-      DATABASES = {
-          "default": {
-              "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-              "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-              "USER": os.environ.get("SQL_USER", "user"),
-              "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-              "HOST": os.environ.get("SQL_HOST", "localhost"),
-              "PORT": os.environ.get("SQL_PORT", "5432"),
-          }
-      }
-
+Configure settings:
+replace `config/settings.py` with the example `settings.example.py`
 
 finish:
 
@@ -42,3 +27,4 @@ check volume:
 
 ----------
 https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
+https://medium.com/@fceruti/setting-up-a-django-project-like-a-pro-a847a9867f9d

@@ -4,4 +4,5 @@ django-model-utils
 django-extensions
 django-environ
 pytest
-pytest-django 
+pytest-django
+django-webpack-loader
