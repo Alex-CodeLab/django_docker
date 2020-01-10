@@ -4,7 +4,7 @@ docker-compose run web django-admin startproject config .
 
 sudo chown -R $USER:$USER .
 
-if [ -d "logs" ]; then
+if [ ! -d "logs" ]; then
   mkdir logs
 fi
 
