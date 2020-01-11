@@ -16,6 +16,7 @@ finish:
     docker-compose up
 
 Build assets:
+
     cd asssets
     npm run dev
 
