@@ -20,6 +20,10 @@ Build assets:
     cd asssets
     npm run dev
 
+shell:
+
+    docker-compose exec web sh
+
 check database:
 
     docker-compose exec db psql --username=hello_django --dbname=hello_django_dev
