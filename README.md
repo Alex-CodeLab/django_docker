@@ -30,7 +30,7 @@ check database:
 
 check volume:
 
-    docker volume inspect django-on-docker_postgres_data
+    docker volume inspect src_postgres_data
 
 
 ----------
