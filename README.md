@@ -5,8 +5,6 @@ install:
      ./install.sh
 
 
-Configure settings:
-replace `config/settings.py` with the example `settings.example.py`
 
 finish:
 
