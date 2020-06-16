@@ -16,6 +16,7 @@ finish:
 Build assets:
 
     cd asssets
+    npm install
     npm run dev
 
 shell:
